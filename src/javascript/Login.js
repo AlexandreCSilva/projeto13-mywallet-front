@@ -1,19 +1,17 @@
 import styled from 'styled-components';
 import { ThreeDots } from  'react-loader-spinner';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import {  useNavigate, Link } from 'react-router-dom';
+import { postLogin } from '../Services/MyWallet';
 
 function Login() {
-    const [object, setObject] = useState({});
+    let login = false;
+    const navigate = useNavigate();
     const [isAble, setIsAble] = useState(true);
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
-
-    const makeLogin = (event) => {
-        console.log(event)
-    };
         
     function handleForm (e) {
         setForm({
@@ -24,9 +22,30 @@ function Login() {
 
     useEffect(() => {
         if (form.email !== '' && form.password !== '') {
-            console.log(form)
+            login = true;
+        } else {
+            login = false;
         }
     }, [form]);
+
+    const makeLogin = (event) => {
+        
+        login ? (
+            postLogin(form).then(setIsAble(false))
+            .catch(function (error) {
+                alert('Ocorreu um erro no login, tente novamente! '+error);
+                setIsAble(true);
+            }).then(function (response) {
+                if (response) {
+                    navigate('/homepage');
+                }
+            }).finally(function(){
+                setIsAble(true);
+            })
+        ) : alert('Preencha todos os campos!');
+
+        event.preventDefault();
+    }
     
     return (
         <Container>
@@ -37,8 +56,8 @@ function Login() {
                     <input type="password" name='password' value={form.password} onChange={handleForm} placeholder='Senha' disabled={!isAble ? true : false} />
                     <button type="submit">
                         {isAble ? 'Entrar' : <ThreeDots 
-                            height="80" 
-                            width="80" 
+                            height="10" 
+                            width="80"
                             radius="9"
                             color="#FFFFFF" 
                             ariaLabel="three-dots-loading"
