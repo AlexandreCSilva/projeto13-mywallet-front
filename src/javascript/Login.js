@@ -29,7 +29,6 @@ function Login() {
     }, [form]);
 
     const makeLogin = (event) => {
-        console.log('aqui')
         navigate('/homepage');
         /* login ? (
             postLogin(form).then(setIsAble(false))

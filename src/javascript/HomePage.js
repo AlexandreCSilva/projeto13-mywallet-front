@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import {  useNavigate } from 'react-router-dom';
 
 const user = { name: 'fulaninho' }
 const balance = [];
 
 function HomePage() {
+    const navigate = useNavigate();
+
     return (
         <Container>
             <span>
@@ -19,11 +22,11 @@ function HomePage() {
             </div>
 
             <Buttons>
-                <div>
+                <div onClick={() => navigate('/entries')}>
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <p>Nova entrada</p>
                 </div>
-                <div>
+                <div onClick={() => navigate('/drawouts')}>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <p>Nova saída</p>
                 </div>
