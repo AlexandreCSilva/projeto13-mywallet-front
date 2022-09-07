@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ThreeDots } from  'react-loader-spinner';
 import { useState, useEffect } from 'react';
 import {  useNavigate, Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { postLogin } from '../Services/MyWallet';
 
 function Login() {
@@ -29,6 +30,7 @@ function Login() {
     }, [form]);
 
     const makeLogin = (event) => {
+        localStorage.setItem('auth', JSON.stringify({ timestamp: dayjs().unix()}));
         navigate('/homepage');
         /* login ? (
             postLogin(form).then(setIsAble(false))
