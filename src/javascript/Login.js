@@ -29,8 +29,9 @@ function Login() {
     }, [form]);
 
     const makeLogin = (event) => {
-        
-        login ? (
+        console.log('aqui')
+        navigate('/homepage');
+        /* login ? (
             postLogin(form).then(setIsAble(false))
             .catch(function (error) {
                 alert('Ocorreu um erro no login, tente novamente! '+error);
@@ -44,7 +45,7 @@ function Login() {
             })
         ) : alert('Preencha todos os campos!');
 
-        event.preventDefault();
+        event.preventDefault(); */
     }
     
     return (
@@ -78,7 +79,7 @@ function Login() {
 
 export default Login;
 
-export const Container = styled.div`
+const Container = styled.div`
     width: 100%;
     height: 100vh;
     background-color: #8c11be;

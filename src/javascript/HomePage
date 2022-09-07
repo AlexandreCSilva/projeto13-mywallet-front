@@ -1,9 +1,0 @@
-function HomePage() {
-    return (
-        <p>
-            seila
-        </p>
-    );
-}
-
-export default HomePage;
