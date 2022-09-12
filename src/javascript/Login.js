@@ -31,11 +31,11 @@ function Login() {
 
     const makeLogin = (event) => {
         localStorage.setItem('auth', JSON.stringify({ timestamp: dayjs().unix()}));
-        navigate('/homepage');
-        /* login ? (
+
+        login ? (
             postLogin(form).then(setIsAble(false))
-            .catch(function (error) {
-                alert('Ocorreu um erro no login, tente novamente! '+error);
+            .catch(function () {
+                alert('Ocorreu um erro no login, tente novamente!');
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {
@@ -46,7 +46,7 @@ function Login() {
             })
         ) : alert('Preencha todos os campos!');
 
-        event.preventDefault(); */
+        event.preventDefault();
     }
     
     return (

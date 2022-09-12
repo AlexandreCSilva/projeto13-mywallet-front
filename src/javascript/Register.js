@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { postRegister } from '../Services/MyWallet';
 
 function Register() {
-    let login = false;
+    let register = false;
     const navigate = useNavigate();
     const [isAble, setIsAble] = useState(true);
     const [form, setForm] = useState({
@@ -24,18 +24,18 @@ function Register() {
 
     useEffect(() => {
         if (form.name !== '' && form.email !== '' && form.password !== '' && form.confirmPassword !== '') {
-            login = true;
+            register = true;
         } else {
-            login = false;
+            register = false;
         }
     }, [form]);
 
     const makeRegister = (event) => {
         
-        login ? (
+        register ? (
             postRegister(form).then(setIsAble(false))
-            .catch(function (error) {
-                alert('Ocorreu um erro no login, tente novamente! '+ error.response.data);
+            .catch(function () {
+                alert('Ocorreu um erro no cadastro, tente novamente!');
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {

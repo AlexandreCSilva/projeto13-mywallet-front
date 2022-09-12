@@ -8,8 +8,13 @@ function postRegister(body) {
 }
 
 function postLogin (body) {
-    const promise = axios.post(`${BASE_URL}/login`, body);
+    const promise = axios.post(`${BASE_URL}/sign-in`, body);
     return promise;
 }
 
-export { postLogin, postRegister};
+function postBalance (body, header) {
+    const promise = axios.post(`${BASE_URL}/sign-in`, body);
+    return promise;
+}
+
+export { postLogin, postRegister, postBalance};
