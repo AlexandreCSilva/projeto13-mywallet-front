@@ -4,7 +4,7 @@ import { ThreeDots } from  'react-loader-spinner';
 import {  useNavigate } from 'react-router-dom';
 import { postEditedBalance } from "../Services/MyWallet";
 
-function EditedEntries (){
+function EditedDrawOuts (){
     let entries = false;
     const navigate = useNavigate();
     const [isAble, setIsAble] = useState(true);
@@ -28,13 +28,13 @@ function EditedEntries (){
         }
     }, [form]);
 
-    const addValue = (event) => {
+    const drawValue = (event) => {
         const auth = JSON.parse(localStorage.getItem('auth'));
         const balanceId = JSON.parse(localStorage.getItem('balanceId'));
         const config = { headers:{'Authorization': 'Bearer '+ auth.authorization, 'balanceId': balanceId}};
 
         entries ? (
-            postEditedBalance({ value: form.value, description: form.description, positive: true}, config).then(setIsAble(false))
+            postEditedBalance({ value: form.value, description: form.description, positive: false}, config).then(setIsAble(false))
             .catch(function () {
                 alert('Ocorreu um erro ao adicionar valor, tente novamente!');
                 setIsAble(true);
@@ -52,9 +52,9 @@ function EditedEntries (){
 
     return (
         <Container>
-            <h1>Editar entrada</h1>
+            <h1>Editar saída</h1>
 
-            <form onSubmit={addValue}>
+            <form onSubmit={drawValue}>
                 <input type="number" name='value' value={form.value} onChange={handleForm} placeholder='Valor' disabled={!isAble ? true : false} />
                 <input type="text" name='description' value={form.description} onChange={handleForm} placeholder='Descrição' disabled={!isAble ? true : false} />
                 <button type="submit">
@@ -126,4 +126,4 @@ const Container = styled.div`
     }
 `;
 
-export default EditedEntries;
+export default EditedDrawOuts;

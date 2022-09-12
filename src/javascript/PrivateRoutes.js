@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const MIN_10 = 60 * 10;
 
 function renderError() {
-    localStorage.clear('auth');
+    localStorage.clear();
     
     return (
         <Container>

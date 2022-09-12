@@ -7,6 +7,7 @@ import Entries from "./Entries";
 import DrawOuts from "./DrawOuts";
 import PrivatePage from "./PrivateRoutes";
 import EditedEntries from "./EditEntries";
+import EditedDrawOuts from './EditDrawOuts';
 
 function App() {
 	return (
@@ -18,7 +19,8 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/homepage" element={<PrivatePage><HomePage /></PrivatePage>} />
                     <Route path="/entries" element={<PrivatePage><Entries /></PrivatePage>} />
-                    <Route path="/edit/" element={<PrivatePage><EditedEntries /></PrivatePage>} />
+                    <Route path="/editAdd" element={<PrivatePage><EditedEntries /></PrivatePage>} />
+                    <Route path="/editDraw" element={<PrivatePage><EditedDrawOuts /></PrivatePage>} />
                     <Route path="/drawouts" element={<PrivatePage><DrawOuts /></PrivatePage>} />
                 </Routes>
             </BrowserRouter>

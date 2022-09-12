@@ -38,7 +38,7 @@ function Login() {
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {
-                    localStorage.clear('auth');
+                    localStorage.clear();
                     localStorage.setItem( 'auth', JSON.stringify({ timestamp: dayjs().unix(), authorization: response.data.token, name: response.data.name}));
                     navigate('/homepage');
                 }
