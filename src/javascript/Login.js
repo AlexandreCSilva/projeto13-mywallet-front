@@ -30,7 +30,6 @@ function Login() {
     }, [form]);
 
     const makeLogin = (event) => {
-        localStorage.setItem('auth', JSON.stringify({ timestamp: dayjs().unix()}));
 
         login ? (
             postLogin(form).then(setIsAble(false))
@@ -39,6 +38,7 @@ function Login() {
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {
+                    localStorage.setItem( 'auth', JSON.stringify({ timestamp: dayjs().unix(), authorization: response.data}));
                     navigate('/homepage');
                 }
             }).finally(function(){
