@@ -2,21 +2,12 @@ import styled from "styled-components";
 import {  useNavigate, Link } from 'react-router-dom';
 import { getBalance, deleteBalance } from "../Services/MyWallet";
 import { useState, useEffect } from 'react';
-/* 
-() => {
-    window.confirm('Deseja mesmo deletar a mensagem?') ? (
-        deleteBalance( config.params = {'balanceId': item._id} )
-        .then(function (response) {
-            if (response) {
-                window.location.reload();
-            }
-        })
-    ) : ''; */
 
 function HomePage() {
     const navigate = useNavigate();
     const auth = JSON.parse(localStorage.getItem('auth'));
     const config = { headers:{'Authorization': 'Bearer '+ auth.authorization}};
+    
     const [ balance, setBalance ] = useState([]);
     let total = 0;
     
@@ -28,7 +19,7 @@ function HomePage() {
             }
         })
     }, []);
-    
+
     return (
         <Container>
             <span>
@@ -52,8 +43,27 @@ function HomePage() {
                             return (
                                 <Value positive={item.positive}>
                                     <h2>{item.time}</h2>
-                                    <span><h3 onClick={() => {item.positive ? navigate('/editAdd') : navigate('/editDraw');  localStorage.setItem( 'balanceId', JSON.stringify(item._id));}}>{item.description}</h3><h4 >{item.value}</h4></span>
-                                    <h5>x</h5>
+                                    <span>
+                                        <h3 onClick={() => {  return item.positive ?
+                                            navigate('/editAdd') : 
+                                            (navigate('/editDraw'), localStorage.setItem( 'balanceId', JSON.stringify(item._id)))
+                                        }}>
+                                            {item.description}
+                                        </h3>
+                                        <h4 >
+                                            {item.value}
+                                        </h4>
+                                    </span>
+                                    <h5 onClick={() => {
+                                        window.confirm('Deseja mesmo deletar a mensagem?') ? (
+                                            deleteBalance({ headers:{'Authorization': 'Bearer '+ auth.authorization, 'balanceId': item._id}}            )
+                                            .then(function (response) {
+                                                if (response) {
+                                                    window.location.reload();
+                                                }
+                                            })
+                                        ) : <></>;}}
+                                    >x</h5>
                                 </Value>
                             );
                         })

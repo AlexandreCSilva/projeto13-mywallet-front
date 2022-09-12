@@ -27,8 +27,8 @@ function postEditedBalance ( body, header) {
     return promise;
 }
 
-function deleteBalance ( header, params) {
-    const promise = axios.delete(`${BASE_URL}/balance/?balanceId=`+params, header);
+function deleteBalance ( header ) {
+    const promise = axios.delete(`${BASE_URL}/balance`, header);
     return promise;
 }
 
