@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate, Link } from 'react-router-dom';
 
 const user = { name: 'fulaninho' }
 const balance = [];
@@ -11,7 +11,9 @@ function HomePage() {
         <Container>
             <span>
                 <h1>Olá, {user.name}</h1>
-                <ion-icon name="exit-outline"></ion-icon>
+                <Link  to='/'>
+                    <ion-icon name="exit-outline"></ion-icon>
+                </Link>
             </span>
 
             <div>

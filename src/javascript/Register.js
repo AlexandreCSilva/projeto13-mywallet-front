@@ -23,7 +23,7 @@ function Register() {
     }
 
     useEffect(() => {
-        if (form.name !== '' && form.email !== '' && form.password !== '') {
+        if (form.name !== '' && form.email !== '' && form.password !== '' && form.confirmPassword !== '') {
             login = true;
         } else {
             login = false;
@@ -35,11 +35,12 @@ function Register() {
         login ? (
             postRegister(form).then(setIsAble(false))
             .catch(function (error) {
-                alert('Ocorreu um erro no login, tente novamente! '+error);
+                alert('Ocorreu um erro no login, tente novamente! '+ error.response.data);
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {
-                    navigate('/homepage');
+                    alert('Registrado com sucesso!');
+                    navigate('/');
                 }
             }).finally(function(){
                 setIsAble(true);
