@@ -38,6 +38,7 @@ function Login() {
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {
+                    localStorage.clear('auth');
                     localStorage.setItem( 'auth', JSON.stringify({ timestamp: dayjs().unix(), authorization: response.data}));
                     navigate('/homepage');
                 }

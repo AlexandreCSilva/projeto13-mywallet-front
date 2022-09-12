@@ -13,8 +13,13 @@ function postLogin (body) {
 }
 
 function postBalance (body, header) {
-    const promise = axios.post(`${BASE_URL}/sign-in`, body);
+    const promise = axios.post(`${BASE_URL}/balance`, body, header);
     return promise;
 }
 
-export { postLogin, postRegister, postBalance};
+function getBalance (body, header) {
+    const promise = axios.post(`${BASE_URL}/balance`, body, header);
+    return promise;
+}
+
+export { postLogin, postRegister, postBalance, getBalance};

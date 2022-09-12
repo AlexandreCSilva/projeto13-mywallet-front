@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import {  useNavigate, Link } from 'react-router-dom';
 
-const user = { name: 'fulaninho' }
-const balance = [];
+const navigate = useNavigate();
 
 function HomePage() {
-    const navigate = useNavigate();
+    
 
     return (
         <Container>
             <span>
-                <h1>Olá, {user.name}</h1>
+                <h1>Olá, </h1>
                 <Link  to='/'>
                     <ion-icon name="exit-outline"></ion-icon>
                 </Link>

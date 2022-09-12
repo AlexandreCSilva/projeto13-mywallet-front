@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from 'react';
 import { ThreeDots } from  'react-loader-spinner';
 import {  useNavigate } from 'react-router-dom';
+import { postBalance } from "../Services/MyWallet";
 
 function DrawOuts (){
     let drawOuts = false;
@@ -28,11 +29,13 @@ function DrawOuts (){
     }, [form]);
 
     const addValue = (event) => {
-        navigate('/homepage');
-        /* drawOuts ? (
-            postLogin(form).then(setIsAble(false))
-            .catch(function (error) {
-                alert('Ocorreu um erro no login, tente novamente! '+error);
+        const auth = JSON.parse(localStorage.getItem('auth'));
+        const config = { headers:{'Authorization': 'Bearer '+ auth.authorization}};
+
+        drawOuts ? (
+            postBalance({ value: form.value, description: form.description, positive: false}, config).then(setIsAble(false))
+            .catch(function () {
+                alert('Ocorreu um erro ao remover valor, tente novamente!');
                 setIsAble(true);
             }).then(function (response) {
                 if (response) {
@@ -41,9 +44,9 @@ function DrawOuts (){
             }).finally(function(){
                 setIsAble(true);
             })
-        ) : alert('Preencha todos os campos!');
+        ) : alert('Preencha todos os campos com dados válidos!');
 
-        event.preventDefault(); */
+        event.preventDefault();
     }
 
     return (
