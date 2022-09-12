@@ -39,7 +39,7 @@ function Login() {
             }).then(function (response) {
                 if (response) {
                     localStorage.clear('auth');
-                    localStorage.setItem( 'auth', JSON.stringify({ timestamp: dayjs().unix(), authorization: response.data}));
+                    localStorage.setItem( 'auth', JSON.stringify({ timestamp: dayjs().unix(), authorization: response.data.token, name: response.data.name}));
                     navigate('/homepage');
                 }
             }).finally(function(){

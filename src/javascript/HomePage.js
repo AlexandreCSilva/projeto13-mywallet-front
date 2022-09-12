@@ -1,27 +1,74 @@
 import styled from "styled-components";
 import {  useNavigate, Link } from 'react-router-dom';
-
-const navigate = useNavigate();
+import { getBalance, deleteBalance } from "../Services/MyWallet";
+import { useState, useEffect } from 'react';
 
 function HomePage() {
+    const navigate = useNavigate();
+    const auth = JSON.parse(localStorage.getItem('auth'));
+    const config = { headers:{'Authorization': 'Bearer '+ auth.authorization}};
+    const [ balance, setBalance ] = useState([]);
+    let total = 0;
     
-
+    useEffect(() => {
+        getBalance( config )
+        .then(function (response) {
+            if (response) {
+                setBalance(response.data);
+            }
+        })
+    }, []);
+    
     return (
         <Container>
             <span>
-                <h1>Olá, </h1>
+                <h1>Olá, {auth.name}</h1>
                 <Link  to='/'>
                     <ion-icon name="exit-outline"></ion-icon>
                 </Link>
             </span>
 
-            <div>
-                { (balance.length === 0) ?
+            <Balance>
+                { 
+                    (balance.length === 0) ?
                     <p>Não há registros de entrada ou saída</p>
-                    : 'saldo'             
+                    : (
+                        balance.map((item) => {
+                            if (item.positive){
+                                total += parseFloat(item.value);
+                            } else {
+                                total -= parseFloat(item.value);
+                            }
+                            return (
+                                <Value positive={item.positive}>
+                                    <h2>{item.time}</h2>
+                                    <span><h3 onClick={() => navigate('/balance/?balanceId='+item._id)}>{item.description}</h3><h4 >{item.value}</h4></span>
+                                    <h5 onClick={() => {
+                                        window.confirm('Deseja mesmo deletar a mensagem?') ? (
+                                            deleteBalance( config.params = {'balanceId': item._id} )
+                                            .then(function (response) {
+                                                if (response) {
+                                                    window.location.reload();
+                                                }
+                                            })
+                                        ) : '';}}
+                                    >x</h5>
+                                </Value>
+                            );
+                        })
+                    )           
                 }
-            </div>
 
+                
+            </Balance>
+            
+            <Bottom positive={total >= 0}>
+                    <div>
+                        <h3>Saldo</h3>
+                        <h4>{Math.abs(total)}</h4>
+                    </div>
+            </Bottom>
+            
             <Buttons>
                 <div onClick={() => navigate('/entries')}>
                     <ion-icon name="add-circle-outline"></ion-icon>
@@ -46,7 +93,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 
-    div, 
     span {
         width: 80%;
         margin-left: 10%;
@@ -72,23 +118,56 @@ const Container = styled.div`
         }
     }
 
-    div {
-        height: 70%;
-        background-color: #ffffff;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+`;
 
-        p {
-            color: #868686;
-            font-family: 'Raleway';
-            font-weight: 400;
-            font-size: 20px;
-            text-align: center;
-        }
+const Balance = styled.div`
+    margin-left: 10%;
+    width: 80%;
+    height: 60%;
+    padding-top: 20px;
+    background-color: #ffffff;
+    border-radius: 5px 5px 0 0 ;
+    overflow-y: scroll;
+    
+    p {
+        color: #868686;
+        font-family: 'Raleway';
+        font-weight: 400;
+        font-size: 20px;
+        text-align: center;
     }
-   
+`;
+
+const Value = styled.div`
+    padding: 0 5%;
+    margin-bottom: 20px;
+    display: flex;
+    font-family: 'Raleway';
+    font-weight: 400;
+    font-size: 16px;
+    
+    h5,
+    h2 {
+        width: 20%;
+        float: left;
+        color: #C6C6C6;
+    }
+
+    span {
+        margin: 0;
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    h4 {
+        color: ${props => props.positive ? '#03AC00' : '#C70000'};
+    }
+
+    h5 {
+        margin-left: 10px;
+        width: 3%;
+    }
 `;
 
 const Buttons = styled.span`
@@ -108,7 +187,8 @@ const Buttons = styled.span`
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
-
+        border-radius: 5px;
+        
         * {
             margin: 20px;
         }
@@ -119,5 +199,27 @@ const Buttons = styled.span`
             font-size: 15px;
             color: #ffffff;
         }
+    }
+`;
+
+const Bottom = styled.div`
+    margin-left: 10%;
+    width: 80%;
+    height: 10%;
+    background-color: #ffffff;
+    border-radius: 0 0 5px 5px;
+
+    div {
+        padding: 3% 5%;
+        font-family: 'Raleway';
+        font-weight: 700;
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+    } 
+    
+
+    h4 {
+        color: ${props => props.positive ? '#03AC00' : '#C70000'};
     }
 `;

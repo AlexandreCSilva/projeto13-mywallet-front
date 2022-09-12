@@ -17,9 +17,19 @@ function postBalance (body, header) {
     return promise;
 }
 
-function getBalance (body, header) {
-    const promise = axios.post(`${BASE_URL}/balance`, body, header);
+function getBalance ( header) {
+    const promise = axios.get(`${BASE_URL}/balance`, header);
     return promise;
 }
 
-export { postLogin, postRegister, postBalance, getBalance};
+function postEditedBalance ( body, header) {
+    const promise = axios.post(`${BASE_URL}/edit/`, body, header);
+    return promise;
+}
+
+function deleteBalance ( header, params) {
+    const promise = axios.delete(`${BASE_URL}/balance/?balanceId=`+params, header);
+    return promise;
+}
+
+export { postLogin, postRegister, postBalance, getBalance, postEditedBalance, deleteBalance};
